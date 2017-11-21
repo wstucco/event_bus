@@ -8,7 +8,7 @@ defmodule EventBus.EventStore do
   alias EventBus.Model.Event
   alias :ets, as: Ets
 
-  @prefix "eb_es_"
+  @prefix "__eb_es_"
 
   @doc false
   def start_link do

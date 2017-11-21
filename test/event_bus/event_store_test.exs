@@ -14,7 +14,7 @@ defmodule EventBus.EventStoreTest do
     Process.sleep(100)
     all_tables = :ets.all()
 
-    assert Enum.any?(all_tables, fn t -> t == :"eb_es_#{topic}" end)
+    assert Enum.any?(all_tables, fn t -> t == :"__eb_es_#{topic}" end)
   end
 
   test "save" do

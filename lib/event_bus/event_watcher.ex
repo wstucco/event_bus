@@ -11,7 +11,7 @@ defmodule EventBus.EventWatcher do
   alias EventBus.EventStore
   alias :ets, as: Ets
 
-  @prefix "eb_ew_"
+  @prefix "__eb_ew_"
 
   @doc false
   def start_link do

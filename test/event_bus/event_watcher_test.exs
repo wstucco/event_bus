@@ -15,7 +15,7 @@ defmodule EventBus.EventWatcherTest do
     Process.sleep(1_000)
     all_tables = :ets.all()
 
-    assert Enum.any?(all_tables, fn t -> t == :"eb_ew_#{topic}" end)
+    assert Enum.any?(all_tables, fn t -> t == :"__eb_ew_#{topic}" end)
   end
 
   test "create and fetch" do
