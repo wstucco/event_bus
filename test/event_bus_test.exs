@@ -44,4 +44,16 @@ defmodule EventBusrTest do
   test "topic_exist? with a non-existent topic" do
     refute EventBus.topic_exist? :unknown_called
   end
+
+  test "register_topic with an existent topic" do
+    assert EventBus.topic_exist? :metrics_received
+    EventBus.register_topic :metrics_received
+    assert EventBus.topic_exist? :metrics_received
+  end
+
+  test "register_topic with a non-existent topic" do
+    refute EventBus.topic_exist? :new_topic2
+    EventBus.register_topic :new_topic2
+    assert EventBus.topic_exist? :new_topic2
+  end
 end

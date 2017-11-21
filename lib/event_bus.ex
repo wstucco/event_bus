@@ -7,6 +7,7 @@ defmodule EventBus do
   alias EventBus.SubscriptionManager
   alias EventBus.EventStore
   alias EventBus.EventWatcher
+  alias EventBus.Config
   alias EventBus.Model.Event
 
   @doc """
@@ -39,6 +40,24 @@ defmodule EventBus do
     event_topics = Application.get_env(:event_bus, :topics, [])
     Enum.any?(event_topics, fn event_topic -> event_topic == topic end)
   end
+
+  @doc """
+  Register a new topic if the topic does not exists yet
+
+  ## Examples
+
+      EventBus.register_topic(:new_topic)
+
+  """
+  @spec register_topic(String.t) :: no_return()
+  def register_topic(topic) do
+    unless topic_exist?(topic) do
+      EventStore.register_topic(topic)
+      EventWatcher.register_topic(topic)
+      Application.put_env(:event_bus, :topics, [topic | Config.topics()])
+    end
+  end
+
 
   @doc """
   Subscribe to the bus.
@@ -123,4 +142,5 @@ defmodule EventBus do
   @spec mark_as_skipped(tuple()) :: no_return()
   defdelegate mark_as_skipped(event_with_listener),
     to: EventWatcher, as: :mark_as_skipped
+
 end
